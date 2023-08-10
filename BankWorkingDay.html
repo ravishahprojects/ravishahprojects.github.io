@@ -84,11 +84,11 @@
       const result = document.getElementById('result');
       
       if (isSpecialDate(selectedDate)) {
-        result.style.color = 'red';
-        result.textContent = `The selected date (${selectedDate.toDateString()}) is not a 2nd or 4th Saturday, or a Sunday.`;
-      } else {
         result.style.color = 'green';
         result.textContent = `The selected date (${selectedDate.toDateString()}) is a 2nd or 4th Saturday, or a Sunday.`;
+      } else {
+        result.style.color = 'brown';
+        result.textContent = `The selected date (${selectedDate.toDateString()}) is not a 2nd or 4th Saturday, or a Sunday.`;
       }
     });
   </script>
