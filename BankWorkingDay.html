@@ -1,60 +1,52 @@
 <!DOCTYPE html>
-
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Bank Working Day Calendar</title>
+  <title>Bank Weekend Holiday Checker</title>
 </head>
 <body>
-	<table border="0px" style="text-align: left">
-		<tr>
-			<th>Please pick a date</th>
-			<td><input id="dateToCheck" type="date"
-				onchange="checkIfWorkingDay()" /></td>
-		</tr>
-		<tr>
-			<th>Day</th>
-			<td id="dayOfMonth"></td>
-		</tr>
-		<tr>
-			<th>Month</th>
-			<td id="monthOfYear"></td>
-		</tr>
-		<tr>
-			<th>Year</th>
-			<td id="year"></td>
-		</tr>
-		<tr>
-			<th>Is it a working day ?</th>
-			<td id="isItWorkingDay" style="color: red"></td>
-		</tr>
-	</table>
-	
-	<script>
-		function checkIfWorkingDay() {
-			var customDate = document.getElementById("dateToCheck").valueAsDate;
-			document.getElementById("year").innerHTML = customDate.getYear() - 100;
+  <h1>Date Checker</h1>
+  <p>Select a date to check if it falls on the 2nd or 4th Saturday, or any Sunday.</p>
+  
+  <form id="dateForm">
+    <label for="selectedDate">Select a Date:</label>
+    <input type="date" id="selectedDate" required>
+    <button type="submit">Check</button>
+  </form>
 
-			var weekdays = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
-			var dayName = weekdays[customDate.getDay()];
-			document.getElementById("dayOfMonth").innerHTML = customDate.getDate() + " (" + dayName + ")";
+  <p id="result" style="font-weight: bold;"></p>
 
-			var months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-			var monthName = months[customDate.getMonth()];
-			document.getElementById("monthOfYear").innerHTML = monthName;
+  <script>
+    function isSpecialDate(date) {
+      const day = date.getDay(); // 0 (Sunday) to 6 (Saturday)
+      const dateOfMonth = date.getDate();
 
-			if (dayName == 'Sunday' || dayName == 'Saturday') {
-				document.getElementById("isItWorkingDay").innerHTML = "Not a working day..";
-			} else {
-				document.getElementById("isItWorkingDay").innerHTML = "A working day..";				
-			}
+      if (day === 0) { // Sunday
+        return true;
+      } else if (day === 6) { // Saturday
+        // Check for 2nd or 4th Saturday
+        if (dateOfMonth > 7 && dateOfMonth <= 14) {
+          return true; // 2nd Saturday
+        } else if (dateOfMonth > 21 && dateOfMonth <= 28) {
+          return true; // 4th Saturday
+        }
+      }
 
-			var holidays = ["", ""];
-		}
+      return false;
+    }
 
-		document.getElementById('dateToCheck').valueAsDate = new Date();
-		checkIfWorkingDay();
-	</script>
-
+    document.getElementById('dateForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const selectedDate = new Date(document.getElementById('selectedDate').value);
+      const result = document.getElementById('result');
+      
+      if (isSpecialDate(selectedDate)) {
+        result.style.color = 'green';
+        result.textContent = `The selected date (${selectedDate.toDateString()}) is a 2nd or 4th Saturday, or a Sunday.`;
+      } else {
+        result.style.color = 'red';
+        result.textContent = `The selected date (${selectedDate.toDateString()}) is not a 2nd or 4th Saturday, or a Sunday.`;
+      }
+    });
+  </script>
 </body>
 </html>
