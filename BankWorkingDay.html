@@ -1,7 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bank Weekend Holiday Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Checker</title>
+  <style>
+    body {
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="date"] {
+      font-size: 18px;
+      padding: 5px;
+    }
+    button[type="submit"] {
+      font-size: 18px;
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button[type="submit"]:hover {
+      background-color: #2980b9;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h1>Date Checker</h1>
@@ -13,7 +57,7 @@
     <button type="submit">Check</button>
   </form>
 
-  <p id="result" style="font-weight: bold;"></p>
+  <p id="result"></p>
 
   <script>
     function isSpecialDate(date) {
@@ -40,11 +84,11 @@
       const result = document.getElementById('result');
       
       if (isSpecialDate(selectedDate)) {
-        result.style.color = 'green';
-        result.textContent = `The selected date (${selectedDate.toDateString()}) is a 2nd or 4th Saturday, or a Sunday.`;
-      } else {
         result.style.color = 'red';
         result.textContent = `The selected date (${selectedDate.toDateString()}) is not a 2nd or 4th Saturday, or a Sunday.`;
+      } else {
+        result.style.color = 'green';
+        result.textContent = `The selected date (${selectedDate.toDateString()}) is a 2nd or 4th Saturday, or a Sunday.`;
       }
     });
   </script>
